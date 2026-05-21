@@ -6,7 +6,7 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "celine-eu-tap-jsonfile"
+name = "tap-jsonfile"
 dynamic = ["version"]
 description = "Singer tap for JsonFile, built with the Meltano Singer SDK."
 readme = "README.md"
