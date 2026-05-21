@@ -43,6 +43,7 @@ s3 = [
 # CLI declaration
 tap-jsonfile = 'tap_jsonfile.tap:TapJsonFile.cli'
 
+
 [dependency-groups]
 dev = [
     { include-group = "test" },
@@ -57,6 +58,7 @@ typing = [
     "mypy>=1.19.1",
     "ty>=0.0.18",
 ]
+
 [tool.hatch.build.targets.wheel]
 packages = [
     "tap_jsonfile",
