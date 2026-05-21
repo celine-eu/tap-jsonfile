@@ -46,6 +46,7 @@ tap-jsonfile = 'tap_jsonfile.tap:TapJsonFile.cli'
 [dependency-groups]
 dev = [
     { include-group = "test" },
+    "python-semantic-release>=9.21.1",
 ]
 test = [
     "pytest>=9",
@@ -154,3 +155,27 @@ commands = [
     [ "mypy", { replace = "posargs", default = [ "tap_jsonfile", "tests" ], extend = true } ],
     [ "ty", "check", { replace = "posargs", default = [ "tap_jsonfile", "tests" ], extend = true } ],
 ]
+
+
+
+[[tool.mypy.overrides]]
+module = ["boto3.*", "moto.*"]
+ignore_missing_imports = true
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+update_pyproject_toml = true 
+commit_parser = "conventional"
+
+build_command = """
+    uv lock --upgrade-package "tap-jsonfile"
+    git add uv.lock
+    uv build
+"""
+
+[tool.semantic_release.commit_parser_options]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf", "chore"]
+parse_squash_commits = true
+ignore_merge_commits = true
+
