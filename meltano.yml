@@ -1,0 +1,45 @@
+send_anonymous_usage_stats: true
+project_id: "tap-jsonfile"
+default_environment: test
+requires_meltano: ">=4.0"
+environments:
+- name: test
+plugins:
+  extractors:
+  - name: "tap-jsonfile"
+    namespace: "tap_jsonfile"
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    - stream-maps
+    - structured-logging
+
+    settings:
+    - name: paths
+      kind: array
+      description: List of glob patterns for JSON files (local or s3://...)
+
+    - name: stream_name
+      kind: string
+      description: Name of the output Singer stream
+      value: records
+
+    - name: samples
+      kind: integer
+      description: Number of files to sample for schema inference
+      value: 20
+
+    settings_group_validation:
+    - [paths]
+
+    config:
+      paths: ["data/**/*.json"]
+      stream_name: records
+
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
