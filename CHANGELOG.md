@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.2 (2026-06-11)
+
+### Bug Fixes
+
+- Review schema handling
+  ([`9d99c92`](https://github.com/celine-eu/tap-jsonfile/commit/9d99c92dae0afc1bc5df408055d6b0ac79fbc5ea))
+
+
 ## v0.1.1 (2026-06-11)
 
 ### Bug Fixes
