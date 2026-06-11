@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.1 (2026-06-11)
+
+### Bug Fixes
+
+- Incorrect schema parsing on null
+  ([`1e5a84d`](https://github.com/celine-eu/tap-jsonfile/commit/1e5a84d6b9142c5911b2757b8e8449715d5e56c4))
+
+
 ## v0.1.0 (2026-05-21)
 
 ### Chores
