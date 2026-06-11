@@ -32,7 +32,7 @@ class TestInferType:
         assert _infer_type(True) == {"type": ["boolean", "null"]}
 
     def test_none(self):
-        assert _infer_type(None) == {"type": ["string", "null"]}
+        assert _infer_type(None) == {"type": ["null"]}
 
     def test_list(self):
         result = _infer_type([1, 2, 3])

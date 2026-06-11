@@ -137,3 +137,6 @@ dmypy.json
 
 .env*
 !.env.example
+
+data/**
+!data/test.json

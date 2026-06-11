@@ -21,7 +21,7 @@ _SIMPLE_TYPE_MAP: dict[type, str] = {
 def _infer_type(value: object) -> dict[str, Any]:
     """Infer a JSON Schema type descriptor from a Python value."""
     if value is None:
-        return {"type": ["string", "null"]}
+        return {"type": ["null"]}
 
     for py_type, json_type in _SIMPLE_TYPE_MAP.items():
         if isinstance(value, py_type):
@@ -94,12 +94,38 @@ def _merge_two(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+_NULL_ONLY_WIDENED = ["string", "number", "integer", "boolean", "null"]
+
+
+def _widen_null_only(schema: dict[str, Any]) -> dict[str, Any]:
+    """Replace null-only types with a permissive type list.
+
+    When every sampled value was None we cannot know the real type, so we
+    accept any JSON primitive rather than rejecting valid data at the target.
+    """
+    types = schema.get("type", [])
+    if isinstance(types, str):
+        types = [types]
+
+    if types == ["null"]:
+        schema = {**schema, "type": list(_NULL_ONLY_WIDENED)}
+
+    if "properties" in schema:
+        schema["properties"] = {
+            k: _widen_null_only(v) for k, v in schema["properties"].items()
+        }
+    if "items" in schema:
+        schema["items"] = _widen_null_only(schema["items"])
+
+    return schema
+
+
 def _merge_schemas(schemas: list[dict[str, Any]]) -> dict[str, Any]:
     """Merge multiple JSON Schema definitions into one."""
     result: dict[str, Any] = {}
     for schema in schemas:
         result = _merge_two(result, schema)
-    return result
+    return _widen_null_only(result)
 
 
 def _record_to_schema(record: dict[str, Any]) -> dict[str, Any]:
