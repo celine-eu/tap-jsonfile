@@ -94,7 +94,7 @@ def _merge_two(a: dict[str, Any], b: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-_NULL_ONLY_WIDENED = ["string", "number", "integer", "boolean", "null"]
+_NULL_ONLY_WIDENED = ["string", "number", "integer", "boolean", "array", "object", "null"]
 
 
 def _widen_null_only(schema: dict[str, Any]) -> dict[str, Any]:
